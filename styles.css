@@ -17,6 +17,11 @@ body, a:link, a:visited, a:active{
   height:32px;
   background-color: #555;
 }
+.dancefloor {
+  height: 86.5%;
+  width: 90%;
+  margin: 6%;
+}
 .title{
   background-color: #777;
 }
@@ -24,4 +29,21 @@ body, a:link, a:visited, a:active{
   border:10px solid red;
   border-radius:10px;
   position:absolute;
+  transition: ease 1s;
+}
+
+.TardigradeDancer {
+  border: none;
+}
+
+.TardigradeDancer img {
+  height: 50px;
+}
+
+.amoebaDancer {
+  border: none;
+}
+
+.amoebaDancer img {
+  height: 100px;
 }
