@@ -18,7 +18,6 @@ $(document).ready(function() {
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
     // get the maker function for the kind of dancer we're supposed to make
     var dancerMakerFunction = window[dancerMakerFunctionName];
-    console.log(dancerMakerFunction);
 
     // make a dancer with a random position
     // console.log($('body').height(),$('body').width());
@@ -29,6 +28,24 @@ $(document).ready(function() {
     );
     $('.dancefloor').append(dancer.$node);
     window.dancers.push(dancer.$node);
+    dancer.$node.on('mouseover', function(e) {
+      var left = parseInt(dancer.$node.css('left'));
+      var top = parseInt(dancer.$node.css('top'));
+
+      if (e.clientX > left) {
+        dancer.$node.css('left', `${left + 100}px`);
+      }
+      if (e.clientX < left) {
+        dancer.$node.css('left', `${left - 100}px`);
+      }
+
+      if (e.clientY < top) {
+        dancer.$node.css('top', `${top + 100}px`);
+      }
+      if (e.clientY > top) {
+        dancer.$node.css('top', `${top - 100}px`);
+      }
+    });
   });
   $('.lineUpButton').on('click', function(event) {
     for (var dancer of window.dancers) {
