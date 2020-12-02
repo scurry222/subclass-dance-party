@@ -1,5 +1,6 @@
 $(document).ready(function() {
   window.dancers = [];
+  var id = 0;
 
   $('.addDancerButton').on('click', function(event) {
     /* This function sets up the click handlers for the create-dancer
@@ -26,16 +27,18 @@ $(document).ready(function() {
       ($(".dancefloor").width() * Math.random()) + 10,
       Math.random() * 1000
     );
+    dancer.$node.attr('id', `${id++}`);
     $('.dancefloor').append(dancer.$node);
     window.dancers.push(dancer.$node);
+
     dancer.$node.on('mouseover', function(e) {
       var left = parseInt(dancer.$node.css('left'));
       var top = parseInt(dancer.$node.css('top'));
 
-      if (e.clientX > left) {
+      if (e.clientX < left) {
         dancer.$node.css('left', `${left + 100}px`);
       }
-      if (e.clientX < left) {
+      if (e.clientX > left) {
         dancer.$node.css('left', `${left - 100}px`);
       }
 
@@ -52,5 +55,27 @@ $(document).ready(function() {
       dancer.css('left', `${$('.dancefloor').width() / 2}px`);
     }
   });
+  $('.collideButton').on('click', function(event) {
+    if (window.dancers.length > 1) {
+      var dancer1 = window.dancers[0];
+      var dancer2 = window.dancers[1];
+
+      var top1 = parseInt(dancer1.css('top'));
+      var top2 = parseInt(dancer2.css('top'));
+      var left1 = parseInt(dancer1.css('left'));
+      var left2 = parseInt(dancer2.css('left'));
+      var midpoint = {
+        top: (top1 + top2) / 2,
+        left: (left1 + left2) / 2
+      };
+      dancer1.css(midpoint);
+      dancer2.css(midpoint);
+      setTimeout(function() {
+        $(`#${dancer1.attr('id')}`).remove();
+        $(`#${dancer2.attr('id')}`).css('transform', `scale(${5})`);
+      }, 1000);
+      window.dancers.shift();
+    }
+  }); 
 });
 
